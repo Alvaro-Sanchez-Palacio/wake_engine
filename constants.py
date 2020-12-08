@@ -2,10 +2,15 @@
 to squares in Algebraic Notation (AN) and vice-versa.
 
 ..seealso:: https://en.wikipedia.org/wiki/Algebraic_notation_(chess).
+..NOTE:: DO NOT ALTER VALUES !
+    As values are declared as properties of the class (outside of __init__),
+    they are shared amongs all instances declared for this classes.
+    Do not mutate them or the change will impact all modules (shared memory).
 """
 
 class SquarePosition:
     """Translates squares (algebraic notation) into integer (map positions). """
+
     a1 = 0
     b1 = 1
     c1 = 2
@@ -93,8 +98,8 @@ class FileSquares:
     files = [a, b, c, d, e, f, g, h]
 
 class RankSquares:
-
     """Provides integer representation of each rank (AN)."""
+
     _1 = {0,  1,  2,  3,  4,  5,  6,  7 }
     _2 = {8,  9,  10, 11, 12, 13, 14, 15}
     _3 = {16, 17, 18, 19, 20, 21, 22, 23}

@@ -3,8 +3,8 @@ import string
 
 from constants import Piece, FileSquares as fsq, RankSquares as rsq
 
-class Board():
 
+class Board():
     """
     Scratch notes
         - bitboard square-centric representation
@@ -231,9 +231,8 @@ class Board():
         return np.zeros(self.board_size**2, dtype="byte")
 
     def set_rank_file_bitmaps(self):
-        # todo: faster numpy methods
-        for val in fsq.a:
-            self.file_a_bb[val] = 1
+        # TODO: faster numpy methods
+        for val in fsq.a: self.file_a_bb[val] = 1
 
         for val in fsq.b: self.file_b_bb[val] = 1
         for val in fsq.c: self.file_c_bb[val] = 1
@@ -277,6 +276,10 @@ class Board():
         self.black_K_bb[60] = 1
 
 def pretty_print_bb(bb, board_size=8):
+    """Prettified representation of the board.
+    ..TODO:: Refactor into a dedicated module.
+    """
+
     val = ''
     display_rank = board_size
     board = np.reshape(np.flip(bb), (board_size, board_size))
