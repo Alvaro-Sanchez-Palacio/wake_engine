@@ -1,4 +1,11 @@
+"""Global constants module mainly to translate from integers (map positions)
+to squares in Algebraic Notation (AN) and vice-versa.
+
+..seealso:: https://en.wikipedia.org/wiki/Algebraic_notation_(chess).
+"""
+
 class SquarePosition:
+    """Translates squares (algebraic notation) into integer (map positions). """
     a1 = 0
     b1 = 1
     c1 = 2
@@ -72,6 +79,8 @@ class SquarePosition:
     h8 = 63
 
 class FileSquares:
+    """Provides integer representation of each file (AN)."""
+
     a = {0, 8,  16, 24, 32, 40, 48, 56}
     b = {1, 9,  17, 25, 33, 41, 49, 57}
     c = {2, 10, 18, 26, 34, 42, 50, 58}
@@ -84,6 +93,8 @@ class FileSquares:
     files = [a, b, c, d, e, f, g, h]
 
 class RankSquares:
+
+    """Provides integer representation of each rank (AN)."""
     _1 = {0,  1,  2,  3,  4,  5,  6,  7 }
     _2 = {8,  9,  10, 11, 12, 13, 14, 15}
     _3 = {16, 17, 18, 19, 20, 21, 22, 23}
@@ -96,10 +107,25 @@ class RankSquares:
     ranks = [_1, _2, _3, _4, _5, _6, _7, _8]
 
 class Color:
+    """Provides binary representation of the colors.
+
+    ..FIXME:: Class never used -> To remove or refactor elsewhere ?
+    """
+
     WHITE = 0
     BLACK = 1
 
 class Piece:
+    """Provides integer representation of the different piece types of the
+    board.
+
+    The naming convention is conformed of the color of the piece and the letter
+    of the piece in AN.
+
+    ..NOTE:: As the represented properties are types, multiple pieces of a type
+    will share one "type".
+    """
+
     EMPTY = 0
 
     wP = 1
