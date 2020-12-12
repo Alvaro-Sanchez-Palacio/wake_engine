@@ -1,15 +1,26 @@
-import numpy as np
+"""
+General module to represent the square-centric state of the board.
+
+This module contains a bitmap representation of  components :
+- ranks: rank_[rank: 1 to 8]_bb. Ex: rank_1_bb.
+- files: file_[file: a to h]_bb. Ex: file_a_bb.
+
+Attrs:
+
+
+
+"""
 import string
+import numpy as np
 
 from constants import Piece, FileSquares as fsq, RankSquares as rsq
-
 
 class Board():
     """
     Scratch notes
         - bitboard square-centric representation
 
-        todo:
+        TODO:
         - should just store legal moves for every square given a move type bitboard (?)
             on start so it is a table lookup for each diag, rank, file motion for sliding pieces
             and one lookup for knights
@@ -23,12 +34,13 @@ class Board():
             Illegal Moves (same color AND), etc.
     """
 
-
     def __init__(self, board_size=8):
 
         self.board_size = board_size # (64 squares)
 
-        self.reset_bb()
+        # TODO: Clean-up reset_bb() or maintain for future extensibility?
+        # self.reset_bb()
+        self.bb = self.make_empty_bitmap()
 
         self.rank_1_bb = self.make_empty_bitmap()
         self.rank_2_bb = self.make_empty_bitmap()
@@ -97,17 +109,33 @@ class Board():
 
 
     def init_pieces(self):
+        """Wrapper to initialize the board.
+
+        See: _set_white()
+        See: _set_black()
+        """
         self._set_white()
         self._set_black()
 
-    def reset_bb(self):
-        self.bb = self.make_empty_bitmap()
+    # TODO: Clean-up ? -> Use directly `self.make_empty_bitmap()` instead?
+    # def reset_bb(self):
+    #     self.bb = self.make_empty_bitmap()
 
     def get_white_pieces_bb(self):
-        return self.white_P_bb | self.white_R_bb | self.white_N_bb | self.white_B_bb | self.white_K_bb | self.white_Q_bb
+        return self.white_P_bb | \
+               self.white_R_bb | \
+               self.white_N_bb | \
+               self.white_B_bb | \
+               self.white_K_bb | \
+               self.white_Q_bb
 
     def get_black_pieces_bb(self):
-        return self.black_P_bb | self.black_R_bb | self.black_N_bb | self.black_B_bb | self.black_K_bb | self.black_Q_bb
+        return self.black_P_bb | \
+               self.black_R_bb | \
+               self.black_N_bb | \
+               self.black_B_bb | \
+               self.black_K_bb | \
+               self.black_Q_bb
 
     def update_position(self, piece_map):
         # inefficient
@@ -225,14 +253,22 @@ class Board():
         self.occupied_squares_bb = result
 
     def get_empty_squares_bb(self):
+        """Get the empty squares.
+
+        This method works by obtaining the complement of the occupied squares
+        taking advantage of the binary representation.
+
+        ..seealso:: https://wiki.python.org/moin/BitwiseOperators
+        """
         return  1 - self.occupied_squares_bb
 
     def make_empty_bitmap(self):
         return np.zeros(self.board_size**2, dtype="byte")
 
     def set_rank_file_bitmaps(self):
-        # TODO: faster numpy methods
-        for val in fsq.a: self.file_a_bb[val] = 1
+        # todo: faster numpy methods
+        for val in fsq.a:
+            self.file_a_bb[val] = 1
 
         for val in fsq.b: self.file_b_bb[val] = 1
         for val in fsq.c: self.file_c_bb[val] = 1
@@ -279,6 +315,7 @@ def pretty_print_bb(bb, board_size=8):
     """Prettified representation of the board.
     ..TODO:: Refactor into a dedicated module.
     """
+
 
     val = ''
     display_rank = board_size

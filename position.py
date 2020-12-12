@@ -23,6 +23,8 @@ class Position:
         pass
 
     def set_initial_piece_locs(self):
+        """Sets initial piece locations for white and black."""
+
         self.piece_map[Piece.wP] = set([i for i in range(8, 16)])
         self.piece_map[Piece.wR] = {0, 7}
         self.piece_map[Piece.wN] = {1, 6}
@@ -44,7 +46,7 @@ class Position:
         """
         if not self.is_legal_move(move):
             print('Illegal move')
-            return
+            return "Illegal move"
 
         # Empty piece existing spot
         self.piece_map[move.piece].remove(move.from_sq)
@@ -74,5 +76,6 @@ class Position:
 
     def is_legal_move(self, move):
         """ TODO: quasi-legal move check """
-        return True
-
+        if move:
+            return True
+        return False
